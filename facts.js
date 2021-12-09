@@ -57,6 +57,8 @@ xhr.onload = function () {
       //console.log(element.fact);
       html += `<li>${element.fact}</li>`;
     });
+  } else {
+    console.log("Something went wrong. Could not get data");
   }
   //appended the data to the ul
   facts.innerHTML = html;
