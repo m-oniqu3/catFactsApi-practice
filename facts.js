@@ -11,6 +11,7 @@ let facts = document.querySelector(".facts");
  * The html variable creates and appends a list-item with the fact.
  * The facts are then added to the ul element
  */
+
 /*
 fetch("https://catfact.ninja/facts")
   .then((response) => {
@@ -31,27 +32,35 @@ fetch("https://catfact.ninja/facts")
     console.log(err, "Something went wrong");
   });
 */
+
 //html = `<li> ${data.data[0].fact} <li/>`;
 
 /*Getting Cat facts with XML*/
 
+//initialized a new request
 const xhr = new XMLHttpRequest();
 
+//specified the type of request and to where it is being made
 xhr.open("GET", "https://catfact.ninja/facts", true);
 
+//used onload to check for the readystate (4)
 xhr.onload = function () {
   let html = "";
-
+  //checked if the status is 200. If it is we get the response and parse it
   if (this.status == 200) {
     //console.log(this.responseText);
     info = JSON.parse(this.responseText);
-    console.log(info);
+    //console.log(info);
 
+    //looped through the data
     info.data.forEach((element) => {
       //console.log(element.fact);
       html += `<li>${element.fact}</li>`;
     });
   }
+  //appended the data to the ul
   facts.innerHTML = html;
 };
+
+//send the request
 xhr.send();
