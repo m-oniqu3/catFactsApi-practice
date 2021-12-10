@@ -12,7 +12,6 @@ let facts = document.querySelector(".facts");
  * The facts are then added to the ul element
  */
 
-/*
 fetch("https://catfact.ninja/facts")
   .then((response) => {
     return response.json();
@@ -31,9 +30,56 @@ fetch("https://catfact.ninja/facts")
   .catch((err) => {
     console.log(err, "Something went wrong");
   });
-*/
 
-//html = `<li> ${data.data[0].fact} <li/>`;
+/*This is an async function. It returns a promises. It uses the await keyword to wait until the promise is reolved.
+   * the result of the promise is stored in a variable and the used as data for the statement below. After the data 
+   * is recieved, it is looped through with a forEach method and then the result is appended to the ul.
+
+  */
+
+async function getFacts() {
+  try {
+    let response = await fetch("https://catfact.ninja/facts");
+    let jsonData = await response.json();
+    let factsData = await jsonData.data;
+
+    let html = "";
+    factsData.forEach((element) => {
+      html += `<li>${element.fact}</li>`;
+    });
+    facts.innerHTML = html;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//getFacts();
+
+/* This function is similar to the one above, however, because async returns a promise, we use the .then method after
+ * the function is called to get the data and then loop through it
+ */
+async function getFacts2() {
+  try {
+    let response = await fetch("https://catfact.ninja/facts");
+    let jsonData = await response.json();
+    let factsData2 = await jsonData.data;
+    return factsData2;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+getFacts2().then((factsData2) => {
+  let html = "";
+  factsData2.forEach((element) => {
+    html += `<li>${element.fact}</li>`;
+  });
+  facts.innerHTML = html;
+});
+
+/*console.log(element.fact);
+console.log(factsData);
+html = `<li> ${data.data[0].fact} <li/>`; */
 
 /*Getting Cat facts with XML*/
 
